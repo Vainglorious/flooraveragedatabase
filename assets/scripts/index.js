@@ -8,20 +8,35 @@ const openseaAPICall = (token_id) =>
     )
       .then((response) => response.json())
       .then(async ({ assets }) => {
-        console.log(assets);
-        const createdToken = await db.Token.create({
+        const askPrice = [undefined, null].includes(assets[0]?.last_sale)
+          ? assets[0]?.sell_orders === null
+            ? 0
+            : parseInt(assets[0]?.sell_orders[0]?.current_price || 0) /
+              Math.pow(10, 18)
+          : null;
+
+        const lastSale = [undefined, null].includes(assets[0]?.last_sale)
+          ? null
+          : parseInt(assets[0]?.last_sale?.total_price || 0) / Math.pow(10, 18);
+
+        const values = {
           token_id,
-          ask_price: [undefined, null].includes(assets[0]?.last_sale)
-            ? parseInt(assets[0]?.current_price) / Math.pow(10, 18)
-            : "",
-          last_sale: [undefined, null].includes(assets[0]?.last_sale)
-            ? ""
-            : parseInt(assets[0]?.total_price) / Math.pow(10, 18),
-        });
-        console.log(createdToken);
+          ask_price: askPrice?.toString() || null,
+          last_sale: lastSale?.toString() || null,
+        };
+        const createdToken = upsert(values, { token_id: token_id.toString() });
         return createdToken;
       })
       .catch((error) => console.log(error));
   }, 10000);
 
 export default openseaAPICall;
+
+function upsert(values, condition) {
+  return db.Token.findOne({ where: condition }).then(function (obj) {
+    // update
+    if (obj) return obj.update(values);
+    // insert
+    return db.Token.create(values);
+  });
+}

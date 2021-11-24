@@ -90,6 +90,6 @@ function onListening() {
   debug("Listening on " + bind);
   console.log(`server listening on port ${port}`);
   for (let index = 0; index < 10001; index++) {
-    openseaAPICall(index);
+    setTimeout(() => openseaAPICall(index), index * 5000);
   }
 }
