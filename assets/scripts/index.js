@@ -19,10 +19,21 @@ const openseaAPICall = (token_id) =>
           ? null
           : parseInt(assets[0]?.last_sale?.total_price || 0) / Math.pow(10, 18);
 
+        const saleOrdersCreatedDate = [undefined, null].includes(
+          assets[0]?.last_sale
+        )
+          ? assets[0]?.sell_orders === null
+            ? null
+            : assets[0]?.sell_orders[0]?.created_date
+          : null;
+
         const values = {
           token_id,
           ask_price: askPrice?.toString() || null,
+          ask_price_date: saleOrdersCreatedDate,
           last_sale: lastSale?.toString() || null,
+          last_sale_date: assets[0]?.last_sale?.event_timestamp || null,
+          opensea_link: assets[0]?.permalink,
         };
         const createdToken = upsert(values, { token_id: token_id.toString() });
         return createdToken;
