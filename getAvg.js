@@ -19,12 +19,12 @@ getPrices().then((result) => {
   array = array.sort(function (a, b) {
     return a - b;
   });
-
+  console.log(array);
   const quarter = [];
   for (let index = 0; index < array.length; index++) {
     if (index !== 0 && index % 4 === 0) {
       quarter.push({
-        [index / 4]:
+        [index / 4 - 1]:
           (array[index - 4] +
             array[index - 3] +
             array[index - 2] +
@@ -33,5 +33,5 @@ getPrices().then((result) => {
       });
     }
   }
-  console.log(quarter);
+  console.log({ minimum: array[0], ...quarter, amountForSale: array.length });
 });
