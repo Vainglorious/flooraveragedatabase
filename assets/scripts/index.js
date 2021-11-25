@@ -1,5 +1,6 @@
 import fetch from "node-fetch";
 import db from "../../db/models";
+import discordBot from "./discord.bot";
 
 const openseaAPICall = (token_id) =>
   setTimeout(() => {

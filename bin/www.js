@@ -10,6 +10,8 @@ var http = require("http");
 const db = require("../db/models");
 const { default: openseaAPICall } = require("../assets/scripts");
 const dotenv = require("dotenv");
+const { default: discordBot } = require("../assets/scripts/discord.bot");
+const { default: getAvg } = require("../assets/scripts/getAvg");
 dotenv.config();
 /**
  * Get port from environment and store in Express.
@@ -93,4 +95,10 @@ function onListening() {
   for (let index = 0; index < 10001; index++) {
     setTimeout(() => openseaAPICall(index), index * 5000);
   }
+  getAvg().then((result) => {
+    discordBot(result);
+  });
+  setInterval(() => {
+    getAvg().then((result) => discordBot(result));
+  }, 60000);
 }
