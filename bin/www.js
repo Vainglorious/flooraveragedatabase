@@ -9,7 +9,8 @@ var debug = require("debug")("flooraveragedatabase:server");
 var http = require("http");
 const db = require("../db/models");
 const { default: openseaAPICall } = require("../assets/scripts");
-
+const dotenv = require("dotenv");
+dotenv.config();
 /**
  * Get port from environment and store in Express.
  */
