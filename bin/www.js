@@ -8,6 +8,7 @@ var app = require("../app");
 var debug = require("debug")("flooraveragedatabase:server");
 var http = require("http");
 const db = require("../db/models");
+const { default: openseaAPICall } = require("../assets/scripts");
 
 /**
  * Get port from environment and store in Express.
@@ -29,9 +30,9 @@ var server = http.createServer(app);
 server.listen(port);
 db.sequelize.sync({ force: false }).then(function () {
   server.on("error", onError);
-  server.on("listening", onListening);
   console.log("Database created successfully.");
 });
+server.on("listening", onListening);
 
 /**
  * Normalize a port into a number, string, or false.
@@ -87,4 +88,8 @@ function onListening() {
   var addr = server.address();
   var bind = typeof addr === "string" ? "pipe " + addr : "port " + addr.port;
   debug("Listening on " + bind);
+  console.log(`server listening on port ${port}`);
+  for (let index = 0; index < 10001; index++) {
+    setTimeout(() => openseaAPICall(index), index * 5000);
+  }
 }
