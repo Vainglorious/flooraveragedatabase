@@ -92,8 +92,8 @@ function onListening() {
   var bind = typeof addr === "string" ? "pipe " + addr : "port " + addr.port;
   debug("Listening on " + bind);
   console.log(`server listening on port ${port}`);
-  for (let index = 0; index < 10001; index++) {
-    setTimeout(() => openseaAPICall(index), index * 5000);
+  for (let index = 0; index < 10000; index++) {
+    setTimeout(() => openseaAPICall(index), index * 2000);
   }
   getAvg().then((result) => {
     discordBot(result);
