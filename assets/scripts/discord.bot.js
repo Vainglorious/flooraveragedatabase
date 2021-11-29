@@ -3,7 +3,7 @@ import webhook from "../../config/discord.config";
 
 const discordBot = (item) => {
   const itemArray = Object.keys(item).map((key) => {
-    return { name: key, value: item[key].toString() };
+    return { name: key, value: item[key]?.toString() };
   });
   fetch(webhook, {
     method: "POST",

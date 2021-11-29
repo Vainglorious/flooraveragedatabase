@@ -34,8 +34,8 @@ server.listen(port);
 db.sequelize.sync({ force: false }).then(function () {
   server.on("error", onError);
   console.log("Database created successfully.");
+  server.on("listening", onListening);
 });
-server.on("listening", onListening);
 
 /**
  * Normalize a port into a number, string, or false.
