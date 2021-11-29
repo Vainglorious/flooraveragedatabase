@@ -30,12 +30,18 @@ var server = http.createServer(app);
  * Listen on provided port, on all network interfaces.
  */
 
-server.listen(port);
-db.sequelize.sync({ force: false }).then(function () {
-  server.on("error", onError);
-  console.log("Database created successfully.");
-  server.on("listening", onListening);
-});
+//the database connection is initialize here
+db.sequelize
+  .sync({ force: false })
+  .then(function () {
+    //open the server after database connection has been initialized
+    server.listen(port);
+    server.on("error", onError);
+    console.log("Database created successfully.");
+    //after the database connection, we are checking whether server is open
+    server.on("listening", onListening);
+  })
+  .catch((error) => console.log(error)); //lets log the database connection error to the console if there is any
 
 /**
  * Normalize a port into a number, string, or false.
