@@ -3,7 +3,7 @@ import webhook from "../../config/discord.config";
 
 const discordBot = (item) => {
   const itemArray = Object.keys(item).map((key) => {
-    return { name: key, value: item[key].toString() };
+    return { name: key, value: item[key]?.toString() };
   });
   fetch(webhook, {
     method: "POST",
@@ -18,17 +18,9 @@ const discordBot = (item) => {
         {
           type: "rich",
           color: 1127128,
-          title: "title",
+          title: "Doodle Metrics",
           description: `avarage`,
           fields: itemArray,
-          // {
-          //   name: "Amount",
-          //   value: "Test",
-          // },
-
-          //   thumbnail: {
-          //     url: `${item?.image_url}`,
-          //   },
         },
       ],
     }),
