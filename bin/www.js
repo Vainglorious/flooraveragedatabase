@@ -100,5 +100,5 @@ function onListening() {
   });
   setInterval(() => {
     getAvg().then((result) => discordBot(result));
-  }, 60000);
+  }, 600000);
 }
