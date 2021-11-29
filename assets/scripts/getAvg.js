@@ -20,19 +20,29 @@ const getAvg = () =>
     array = array.sort(function (a, b) {
       return a - b;
     });
-    const quarter = [];
-    for (let index = 0; index < array.length; index++) {
-      if (index !== 0 && index % 4 === 0) {
-        quarter.push(
-          (array[index - 4] +
-            array[index - 3] +
-            array[index - 2] +
-            array[index - 1]) /
-            4
-        );
+    const quarterObj = {};
+    const quarterLength = array.length / 4;
+    const querterObjWillSend = {};
+
+    for (let index = 1; index < 5; index++) {
+      for (let idx = 1; idx < quarterLength; idx++) {
+        quarterObj[index] =
+          quarterObj[index] === undefined
+            ? array[index * idx]
+            : quarterObj[index] + array[index * idx] / quarterLength;
       }
     }
-    return { minimum: array[0], ...quarter, amountForSale: array.length };
+    const fixedArr = Object.values(quarterObj).map((value) => value.toFixed(2));
+
+    fixedArr.map((value, idx) => {
+      querterObjWillSend[`Quarter Average #${idx + 1}`] = value;
+    });
+    console.log(querterObjWillSend);
+    return {
+      "Floor Price": array[0],
+      "Amunt For Sale": array.length,
+      ...querterObjWillSend,
+    };
   });
 
 export default getAvg;
