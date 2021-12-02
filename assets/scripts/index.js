@@ -2,7 +2,7 @@ import fetch from "node-fetch";
 import db from "../../db/models";
 
 const openseaAPIKey = "57fcc64ba50648d6a93f21a0e05fc1a7";
-const openseaAPICall = (token_id) =>
+const openseaAPICall = (token_id = "8969") =>
   setTimeout(() => {
     fetch(
       `https://api.opensea.io/api/v1/assets?token_ids=${token_id}&asset_contract_address=0x8a90cab2b38dba80c64b7734e58ee1db38b8992e&order_direction=desc&offset=0&limit=5`,
@@ -15,12 +15,11 @@ const openseaAPICall = (token_id) =>
     )
       .then((response) => response.json())
       .then(async ({ assets }) => {
-        const askPrice = [undefined, null].includes(assets[0]?.last_sale)
-          ? assets[0]?.sell_orders === null
+        const askPrice =
+          assets[0]?.sell_orders === null
             ? 0
             : parseInt(assets[0]?.sell_orders[0]?.current_price || 0) /
-              Math.pow(10, 18)
-          : null;
+              Math.pow(10, 18);
 
         const lastSale = [undefined, null].includes(assets[0]?.last_sale)
           ? null

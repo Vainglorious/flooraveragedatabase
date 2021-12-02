@@ -9,17 +9,27 @@ async function getPrices() {
         [Op.not]: null,
       },
     },
-    attributes: ["ask_price"],
+    attributes: ["ask_price", "token_id"],
   });
   return prices;
 }
 
 const getAvg = () =>
   getPrices().then((result) => {
+    let arrayWithId = result.map((item) => {
+      return {
+        price: parseFloat(item.dataValues?.ask_price),
+        token: item.dataValues?.token_id,
+      };
+    });
     let array = result.map((item) => parseFloat(item.dataValues?.ask_price));
     array = array.sort(function (a, b) {
       return a - b;
     });
+    arrayWithId = arrayWithId.sort(function (a, b) {
+      return a.price - b.price;
+    });
+
     const quarterObj = {};
     const quarterLength = array.length / 4;
     const querterObjWillSend = {};
@@ -37,7 +47,8 @@ const getAvg = () =>
     fixedArr.map((value, idx) => {
       querterObjWillSend[`Quarter Average #${idx + 1}`] = value;
     });
-    console.log(querterObjWillSend);
+    console.log(arrayWithId.filter((item, index) => index < 4));
+    console.log(array.filter((item, index) => index < 4));
     return {
       "Floor Price": array[0],
       "Amunt For Sale": array.length,
