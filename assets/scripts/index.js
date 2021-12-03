@@ -34,7 +34,7 @@ const openseaAPICall = (token_id) =>
         const values = {
           token_id,
           ask_price: askPrice?.toString() || null,
-          ask_price_date: saleOrdersCreatedDate,
+          ask_sale_date: saleOrdersCreatedDate,
           last_sale: lastSale?.toString() || null,
           last_sale_date: assets[0]?.last_sale?.event_timestamp || null,
           opensea_link: assets[0]?.permalink,
