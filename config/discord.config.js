@@ -1,4 +1,4 @@
 const webhook =
-  "https://discord.com/api/webhooks/913526479780970506/XvKJIv-3eU5gRCzxv1fbhpfhMTMAaq6JccYzKnVSbc98W98hTW4zZ4Yp0feZiWHjL6Sq";
+  "https://discord.com/api/webhooks/916410003827593236/GdgwR2VEIQJhtKqYtEVIZ8fbi4PZiJoD8z6y_xi5HiRNfD1xaPKPoKAjWQwo0L3SsAoK";
 
 export default webhook;
