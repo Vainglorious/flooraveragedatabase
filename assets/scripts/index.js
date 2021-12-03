@@ -16,7 +16,7 @@ const openseaAPICall = (token_id) =>
       .then((response) => response.json())
       .then(async ({ assets }) => {
         const askPrice =
-          assets[0]?.sell_orders === null ||
+          (assets[0] && assets[0]?.sell_orders === null) ||
           assets[0]?.sell_orders[0]?.payment_token_contract?.id === 2
             ? 0
             : parseInt(assets[0]?.sell_orders[0]?.current_price || 0) /
@@ -27,7 +27,8 @@ const openseaAPICall = (token_id) =>
           : parseInt(assets[0]?.last_sale?.total_price || 0) / Math.pow(10, 18);
 
         const saleOrdersCreatedDate =
-          assets[0]?.sell_orders === null
+          assets[0]?.sell_orders === null ||
+          assets[0]?.sell_orders[0]?.payment_token_contract?.id === 2
             ? null
             : assets[0]?.sell_orders[0]?.created_date;
 
