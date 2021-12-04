@@ -18,7 +18,7 @@ const getAvg = () =>
   getPrices().then((result) => {
     let arrayWithId = result.map((item) => {
       return {
-        price: parseFloat(item.dataValues?.ask_price),
+        price: Number(item.dataValues?.ask_price).toPrecision(),
         token: item.dataValues?.token_id,
       };
     });

@@ -21,11 +21,11 @@ const openseaAPICall = (token_id) =>
           (assets[0]?.sell_orders === null ||
             assets[0]?.sell_orders[0]?.payment_token_contract?.id === 2)
             ? 0
-            : assets[0]?.sell_orders[0]?.current_price || 0 / Math.pow(10, 18);
+            : assets[0]?.sell_orders[0]?.current_price / Math.pow(10, 18);
 
         const lastSale = [undefined, null].includes(assets[0]?.last_sale)
           ? null
-          : assets[0]?.last_sale?.total_price || 0 / Math.pow(10, 18);
+          : assets[0]?.last_sale?.total_price / Math.pow(10, 18);
 
         const saleOrdersCreatedDate =
           assets[0]?.sell_orders === null ||
