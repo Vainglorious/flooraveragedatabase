@@ -32,7 +32,7 @@ const getAvg = () =>
 
     const quarterObj = {};
     const quarterLength = array.length / 4;
-    const querterObjWillSend = {};
+    const quarterObjWillSend = {};
 
     for (let index = 1; index < 5; index++) {
       for (let idx = 1; idx < quarterLength; idx++) {
@@ -45,7 +45,7 @@ const getAvg = () =>
     const fixedArr = Object.values(quarterObj).map((value) => value.toFixed(2));
 
     fixedArr.map((value, idx) => {
-      querterObjWillSend[`Quarter Average #${idx + 1}`] = value;
+      quarterObjWillSend[`Quarter Average #${idx + 1}`] = value;
     });
     console.log(arrayWithId.filter((item, index) => index < 4));
     console.log(array.filter((item, index) => index < 4));
