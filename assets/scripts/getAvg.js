@@ -18,7 +18,7 @@ const getAvg = () =>
   getPrices().then((result) => {
     let arrayWithId = result.map((item) => {
       return {
-        price: Number(item.dataValues?.ask_price).toPrecision(),
+        price: parseFloat(item.dataValues?.ask_price),
         token: item.dataValues?.token_id,
       };
     });
@@ -32,7 +32,7 @@ const getAvg = () =>
 
     const quarterObj = {};
     const quarterLength = array.length / 4;
-    const quarterObjWillSend = {};
+    const querterObjWillSend = {};
 
     for (let index = 1; index < 5; index++) {
       for (let idx = 1; idx < quarterLength; idx++) {
@@ -45,14 +45,14 @@ const getAvg = () =>
     const fixedArr = Object.values(quarterObj).map((value) => value.toFixed(2));
 
     fixedArr.map((value, idx) => {
-      quarterObjWillSend[`Quarter Average #${idx + 1}`] = value;
+      querterObjWillSend[`Quarter Average #${idx + 1}`] = value;
     });
     console.log(arrayWithId.filter((item, index) => index < 4));
     console.log(array.filter((item, index) => index < 4));
     return {
       "Floor Price": array[0],
       "Amunt For Sale": array.length,
-      ...quarterObjWillSend,
+      ...querterObjWillSend,
     };
   });
 
