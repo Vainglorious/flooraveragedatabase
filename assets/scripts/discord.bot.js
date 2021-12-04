@@ -19,7 +19,7 @@ const discordBot = (item) => {
           type: "rich",
           color: 1127128,
           title: "Doodle Metrics",
-          description: `avarage`,
+          description: "statistics",
           fields: itemArray,
         },
       ],

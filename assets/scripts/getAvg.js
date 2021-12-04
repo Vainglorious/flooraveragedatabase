@@ -51,7 +51,7 @@ const getAvg = () =>
     console.log(array.filter((item, index) => index < 4));
     return {
       "Floor Price": array[0],
-      "Amunt For Sale": array.length,
+      "Amount For Sale": array.length,
       ...quarterObjWillSend,
     };
   });
