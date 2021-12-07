@@ -12,6 +12,7 @@ const { default: openseaAPICall } = require("../assets/scripts");
 const dotenv = require("dotenv");
 const { default: discordBot } = require("../assets/scripts/discord.bot");
 const { default: getAvg } = require("../assets/scripts/getAvg");
+const { default: getFloorprice } = require("../assets/scripts/getFloorprice");
 dotenv.config();
 /**
  * Get port from environment and store in Express.
@@ -111,6 +112,13 @@ function onListening() {
   getAvg().then((result) => {
     discordBot(result);
   });
+
+  setInterval(() => {
+    getFloorprice()
+      .then((floorprice) => console.log(floorprice))
+      .catch((error) => console.log(error));
+  }, 5000);
+
   setInterval(() => {
     getAvg().then((result) => discordBot(result));
   }, 60000 * 5);

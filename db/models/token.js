@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
   Token.init(
     {
       token_id: DataTypes.STRING,
-      ask_price: DataTypes.STRING,
+      ask_price: DataTypes.FLOAT,
       ask_sale_date: DataTypes.DATE,
       last_sale: DataTypes.STRING,
       last_sale_date: DataTypes.DATE,
