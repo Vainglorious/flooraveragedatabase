@@ -115,7 +115,17 @@ function onListening() {
 
   setInterval(() => {
     getFloorprice()
-      .then((floorprice) => console.log(floorprice))
+      .then(async (floorprice) => {
+        try {
+          const record = await db.floorprice.create({
+            floorprice,
+            date: new Date(),
+          });
+          console.log(record.dataValues);
+        } catch (error) {
+          return error;
+        }
+      })
       .catch((error) => console.log(error));
   }, 5000);
 
