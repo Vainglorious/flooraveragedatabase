@@ -13,6 +13,9 @@ const dotenv = require("dotenv");
 const { default: discordBot } = require("../assets/scripts/discord.bot");
 const { default: getAvg } = require("../assets/scripts/getAvg");
 const { default: getFloorprice } = require("../assets/scripts/getFloorprice");
+const {
+  default: floorpriceDiscordBot,
+} = require("../assets/scripts/floorpice.discord.bot");
 dotenv.config();
 /**
  * Get port from environment and store in Express.
@@ -122,12 +125,13 @@ function onListening() {
             date: new Date(),
           });
           console.log(record.dataValues);
+          floorpriceDiscordBot(record.dataValues);
         } catch (error) {
           return error;
         }
       })
       .catch((error) => console.log(error));
-  }, 5000);
+  }, 300000);
 
   setInterval(() => {
     getAvg().then((result) => discordBot(result));
