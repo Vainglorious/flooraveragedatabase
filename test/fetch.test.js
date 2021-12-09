@@ -20,7 +20,7 @@ const getFunc = () => {
 setInterval(() => getFunc(), 105);
 
 async function getUpdatedAt(params) {
-  const updatedAts = await db.Tokens.findAll({
+  const updatedAts = await db.Token.findAll({
     attributes: ["token_id", "createdAt", "updatedAt"],
   });
   console.log(updatedAts);
