@@ -28,4 +28,4 @@ async function getUpdatedAt(params) {
 }
 
 getFunc();
-getUpdatedAt();
+setInterval(() => getUpdatedAt(), 5000);
