@@ -2,7 +2,7 @@ import fetch from "node-fetch";
 import db from "../../db/models";
 
 const openseaAPIKey = "57fcc64ba50648d6a93f21a0e05fc1a7";
-const openseaAPICall = (token_id) =>
+const openseaAPICall = async (token_id) =>
   setTimeout(() => {
     fetch(
       `https://api.opensea.io/api/v1/assets?token_ids=${token_id}&asset_contract_address=0x8a90cab2b38dba80c64b7734e58ee1db38b8992e&order_direction=desc&offset=0&limit=5`,

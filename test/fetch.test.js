@@ -5,7 +5,9 @@ const getFunc = () => {
   for (let index = 0; index < 99; index++) {
     setTimeout(() => {
       try {
-        openseaAPICall(index);
+        openseaAPICall(index).then(() =>
+          getUpdatedAt({ where: { token_id: index } })
+        );
       } catch (error) {
         if (error instanceof Error) {
           console.log(error.message);
@@ -19,8 +21,9 @@ const getFunc = () => {
 
 setInterval(() => getFunc(), 105);
 
-async function getUpdatedAt(params) {
+async function getUpdatedAt(params = {}) {
   const updatedAts = await db.Token.findAll({
+    ...params,
     attributes: ["token_id", "createdAt", "updatedAt"],
     row: true,
   });
@@ -28,4 +31,3 @@ async function getUpdatedAt(params) {
 }
 
 getFunc();
-setInterval(() => getUpdatedAt(), 5000);
