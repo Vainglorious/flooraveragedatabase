@@ -11,7 +11,7 @@ for (let index = 0; index < 10; index++) {
         console.log(error);
       }
     }
-  }, index * 3000);
+  }, index * 1000);
 }
 setInterval(() => {
   for (let index = 0; index < 10; index++) {
@@ -25,6 +25,6 @@ setInterval(() => {
           console.log(error);
         }
       }
-    }, index * 3000);
+    }, index * 1000);
   }
-}, 31000);
+}, 11000);
