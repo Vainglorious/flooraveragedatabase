@@ -1,6 +1,6 @@
 import openseaAPICall from "../assets/scripts";
 import db from "../db/models";
-for (let index = 0; index < 99; index++) {
+for (let index = 0; index < 10; index++) {
   setTimeout(() => {
     try {
       openseaAPICall(index);
@@ -11,10 +11,10 @@ for (let index = 0; index < 99; index++) {
         console.log(error);
       }
     }
-  }, index * 10000);
+  }, index * 3000);
 }
 setInterval(() => {
-  for (let index = 0; index < 99; index++) {
+  for (let index = 0; index < 10; index++) {
     setTimeout(() => {
       try {
         openseaAPICall(index);
@@ -25,6 +25,6 @@ setInterval(() => {
           console.log(error);
         }
       }
-    }, index * 10000);
+    }, index * 3000);
   }
 }, 105);
