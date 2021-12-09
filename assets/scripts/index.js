@@ -56,11 +56,7 @@ function upsert(values, condition) {
     if (obj)
       return obj
         .update(values)
-        .then((result) =>
-          Object.entries(result?.dataValues).filter(
-            (key, value) => key === "token_id" || key === "updatedAt"
-          )
-        );
+        .then((result) => console.log(result?.dataValues));
     // if there is not any record for the token id then insert a new record
     return db.Token.create(values);
   });
