@@ -22,8 +22,9 @@ setInterval(() => getFunc(), 105);
 async function getUpdatedAt(params) {
   const updatedAts = await db.Token.findAll({
     attributes: ["token_id", "createdAt", "updatedAt"],
+    row: true,
   });
-  console.log(updatedAts);
+  Object.keys(updatedAts).map((key) => console.log(updatedAts[key].dataValues));
 }
 
 getFunc();
