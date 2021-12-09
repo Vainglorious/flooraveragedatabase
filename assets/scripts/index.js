@@ -52,7 +52,15 @@ export default openseaAPICall;
 function upsert(values, condition) {
   return db.Token.findOne({ where: condition }).then(function (obj) {
     // if there is a record for the token id then update the record
-    if (obj) return obj.update(values);
+
+    if (obj)
+      return obj
+        .update(values)
+        .then((result) =>
+          Object.entries(result?.dataValues).filter(
+            (key, value) => key === "token_id" || key === "updatedAt"
+          )
+        );
     // if there is not any record for the token id then insert a new record
     return db.Token.create(values);
   });

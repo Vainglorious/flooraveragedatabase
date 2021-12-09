@@ -1,13 +1,23 @@
 import openseaAPICall from "../assets/scripts";
 import db from "../db/models";
-
-const getFunc = () => {
+for (let index = 0; index < 99; index++) {
+  setTimeout(() => {
+    try {
+      openseaAPICall(index);
+    } catch (error) {
+      if (error instanceof Error) {
+        console.log(error.message);
+      } else {
+        console.log(error);
+      }
+    }
+  }, index * 10000);
+}
+setInterval(() => {
   for (let index = 0; index < 99; index++) {
     setTimeout(() => {
       try {
-        openseaAPICall(index).then(() =>
-          getUpdatedAt({ where: { token_id: index } })
-        );
+        openseaAPICall(index);
       } catch (error) {
         if (error instanceof Error) {
           console.log(error.message);
@@ -15,19 +25,6 @@ const getFunc = () => {
           console.log(error);
         }
       }
-    }, index * 1000);
+    }, index * 10000);
   }
-};
-
-setInterval(() => getFunc(), 105);
-
-async function getUpdatedAt(params = {}) {
-  const updatedAts = await db.Token.findAll({
-    ...params,
-    attributes: ["token_id", "createdAt", "updatedAt"],
-    row: true,
-  });
-  Object.keys(updatedAts).map((key) => console.log(updatedAts[key].dataValues));
-}
-
-getFunc();
+}, 105);
