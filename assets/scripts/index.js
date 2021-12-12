@@ -18,6 +18,7 @@ const openseaAPICall = async (token_id) =>
         const askPrice =
           assets &&
           typeof assets.map === "function" &&
+          assets.length > 0 &&
           (assets[0]?.sell_orders === null ||
             assets[0]?.sell_orders[0]?.payment_token_contract?.id === 2)
             ? 0
@@ -53,10 +54,8 @@ function upsert(values, condition) {
   return db.Token.findOne({ where: condition }).then(function (obj) {
     // if there is a record for the token id then update the record
 
-    if (obj)
-      return obj
-        .update(values)
-        .then((result) => console.log(result?.dataValues));
+    if (obj) return obj.update(values);
+    // .then((result) => console.log(result?.dataValues));
     // if there is not any record for the token id then insert a new record
     return db.Token.create(values);
   });

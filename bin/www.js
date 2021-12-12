@@ -124,7 +124,6 @@ function onListening() {
             floorprice,
             date: new Date(),
           });
-          console.log(record.dataValues);
           floorpriceDiscordBot(record.dataValues);
         } catch (error) {
           return error;

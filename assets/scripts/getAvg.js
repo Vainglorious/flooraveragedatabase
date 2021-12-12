@@ -47,8 +47,8 @@ const getAvg = () =>
     fixedArr.map((value, idx) => {
       quarterObjWillSend[`Quarter Average #${idx + 1}`] = value;
     });
-    console.log(arrayWithId.filter((item, index) => index < 4));
-    console.log(array.filter((item, index) => index < 4));
+    // console.log(arrayWithId.filter((item, index) => index < 4));
+    // console.log(array.filter((item, index) => index < 4));
     return {
       "Floor Price": array[0],
       "Amount For Sale": array.length,
