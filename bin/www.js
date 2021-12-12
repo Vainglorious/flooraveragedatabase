@@ -8,12 +8,20 @@ var app = require("../app");
 var debug = require("debug")("flooraveragedatabase:server");
 var http = require("http");
 const db = require("../db/models");
-
+const { default: openseaAPICall } = require("../assets/scripts");
+const dotenv = require("dotenv");
+const { default: discordBot } = require("../assets/scripts/discord.bot");
+const { default: getAvg } = require("../assets/scripts/getAvg");
+const { default: getFloorprice } = require("../assets/scripts/getFloorprice");
+const {
+  default: floorpriceDiscordBot,
+} = require("../assets/scripts/floorpice.discord.bot");
+dotenv.config();
 /**
  * Get port from environment and store in Express.
  */
 
-var port = normalizePort(process.env.PORT || "3000");
+var port = normalizePort("3001");
 app.set("port", port);
 
 /**
@@ -26,12 +34,18 @@ var server = http.createServer(app);
  * Listen on provided port, on all network interfaces.
  */
 
-server.listen(port);
-db.sequelize.sync({ force: false }).then(function () {
-  server.on("error", onError);
-  server.on("listening", onListening);
-  console.log("Database created successfully.");
-});
+//the database connection is initialize here
+db.sequelize
+  .sync({ force: false })
+  .then(function () {
+    //open the server after database connection has been initialized
+    server.listen(port);
+    server.on("error", onError);
+    console.log("Database created successfully.");
+    //after the database connection, we are checking whether server is open
+    server.on("listening", onListening);
+  })
+  .catch((error) => console.log(error)); //lets log the database connection error to the console if there is any
 
 /**
  * Normalize a port into a number, string, or false.
@@ -87,4 +101,38 @@ function onListening() {
   var addr = server.address();
   var bind = typeof addr === "string" ? "pipe " + addr : "port " + addr.port;
   debug("Listening on " + bind);
+  console.log(`server listening on port ${port}`);
+
+  for (let index = 0; index < 1000; index++) {
+    setTimeout(() => openseaAPICall(index), index * 1000);
+  }
+  setInterval(() => {
+    for (let index = 0; index < 1000; index++) {
+      setTimeout(() => openseaAPICall(index), index * 1000);
+    }
+  }, 1100);
+
+  getAvg().then((result) => {
+    discordBot(result);
+  });
+
+  setInterval(() => {
+    getFloorprice()
+      .then(async (floorprice) => {
+        try {
+          const record = await db.floorprice.create({
+            floorprice,
+            date: new Date(),
+          });
+          floorpriceDiscordBot(record.dataValues);
+        } catch (error) {
+          return error;
+        }
+      })
+      .catch((error) => console.log(error));
+  }, 300000);
+
+  setInterval(() => {
+    getAvg().then((result) => discordBot(result));
+  }, 60000 * 5);
 }
