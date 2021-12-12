@@ -7,7 +7,7 @@ export default async function getFloorprice() {
     const data = await db.Token.findOne({
       where: {
         ask_price: {
-          [Op.ne]: "0",
+          [Op.ne]: 0,
           [Op.not]: null,
         },
       },
