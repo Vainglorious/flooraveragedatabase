@@ -103,14 +103,14 @@ function onListening() {
   debug("Listening on " + bind);
   console.log(`server listening on port ${port}`);
 
-  for (let index = 0; index < 10000; index++) {
+  for (let index = 0; index < 1000; index++) {
     setTimeout(() => openseaAPICall(index), index * 1000);
   }
   setInterval(() => {
-    for (let index = 0; index < 10000; index++) {
+    for (let index = 0; index < 1000; index++) {
       setTimeout(() => openseaAPICall(index), index * 1000);
     }
-  }, 11000);
+  }, 1100);
 
   getAvg().then((result) => {
     discordBot(result);
