@@ -1,6 +1,6 @@
 {
   "name": "flooraveragedatabase",
-  "version": "3.0.0-0",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "start": "nodemon ./bin/www --exec babel-node -e js",
